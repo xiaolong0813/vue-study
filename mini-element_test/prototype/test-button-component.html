@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script>
+        const { createApp, reactive, computed, watchEffect } = Vue;
+
+        const MyButton = {
+            name: "MyButton",
+            data: function () {
+                return {
+                    count: 0,
+                };
+            },
+            template:
+                '<button v-on:click="count++">You clicked me {{ count }} times.</button>',
+        };
+
+        // 添加为插件（组件库一般是以插件形式安装）
+        MyButton.install = (app) => app.component('MyButton', MyButton)
+
+
+        // 组件库: 可以包含多个组件，同时安装，比如MyButton1， MyButton2...
+        const Element = {
+            MyButton,
+            install: app => {
+                app.use(MyButton)
+            }
+        }
+
+        const cpt = {
+            template: `<my-button />`
+        }
+
+        createApp(cpt).use(Element).mount("#app")
+
+        // rollup 打包
+
+    </script>
+
+
+</body>
+
+</html>
